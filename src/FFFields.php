@@ -10,8 +10,8 @@
 
 namespace angellco\fffields;
 
-use angellco\fffields\services\Config as ConfigService;
-use angellco\fffields\variables\FFFieldsVariable;
+use angellco\fffields\services\FieldConfig as FieldConfigService;
+use angellco\fffields\services\Render as RenderService;
 
 use Craft;
 use craft\base\Plugin;
@@ -30,7 +30,8 @@ use yii\base\Event;
  * @package   FFFields
  * @since     0.0.1
  *
- * @property  ConfigService $config
+ * @property  FieldConfigService fieldConfig
+ * @property  RenderService render
  */
 class FFFields extends Plugin
 {
@@ -61,15 +62,11 @@ class FFFields extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('fFFields', FFFieldsVariable::class);
-            }
-        );
+        Event::on(CraftVariable::class,CraftVariable::EVENT_INIT, function (Event $event) {
+            /** @var CraftVariable $variable */
+            $variable = $event->sender;
+            $variable->set('fffields', RenderService::class);
+        });
 
         Craft::info(
             Craft::t(

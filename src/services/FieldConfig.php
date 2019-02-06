@@ -8,20 +8,34 @@
  * @copyright Copyright (c) 2019 Angell & Co
  */
 
-namespace angellco\fffields\variables;
+namespace angellco\fffields\services;
 
 use angellco\fffields\FFFields;
+use angellco\fffields\models\FieldConfig as FieldConfigModel;
 
 use Craft;
+use craft\base\Component;
 
 /**
  * @author    Angell & Co
  * @package   FFFields
  * @since     0.0.1
  */
-class FFFieldsVariable
+class FieldConfig extends Component
 {
     // Public Methods
     // =========================================================================
 
+    /**
+     * @param $handle
+     *
+     * @return ConfigModel
+     */
+    public function get($handle)
+    {
+        return new FieldConfigModel([
+            'handle' => $handle,
+            'type' => 'text'
+        ]);
+    }
 }

@@ -36,7 +36,8 @@
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/angell-co/fffields/master/CHANGELOG.md",
         "components": {
-            "config": "angellco\\spoon\\services\\Config"
+            "fieldConfig": "angellco\\fffields\\services\\FieldConfig",
+            "render": "angellco\\fffields\\services\\Render"
         },
         "class": "angellco\\fffields\\FFFields"
     }

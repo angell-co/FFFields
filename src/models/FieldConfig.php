@@ -8,41 +8,54 @@
  * @copyright Copyright (c) 2019 Angell & Co
  */
 
-namespace angellco\fffields\controllers;
+namespace angellco\fffields\models;
 
 use angellco\fffields\FFFields;
 
 use Craft;
-use craft\web\Controller;
+use craft\base\Model;
+use craft\helpers\Json;
 
 /**
  * @author    Angell & Co
  * @package   FFFields
  * @since     0.0.1
  */
-class Config extends Controller
+class FieldConfig extends Model
 {
-
-    // Protected Properties
+    // Public Properties
     // =========================================================================
 
     /**
-     * @var    bool|array Allows anonymous access to this controller's actions.
-     *         The actions must be in 'kebab-case'
-     * @access protected
+     * @var string
      */
-    protected $allowAnonymous = ['get'];
+    public $handle;
+
+    /**
+     * @var string
+     */
+    public $type;
 
     // Public Methods
     // =========================================================================
 
     /**
-     * @return \yii\web\Response
+     * @inheritdoc
      */
-    public function actionGet()
+    public function rules()
     {
-        $configModel = FFFields::$plugin->config->get();
-        return $this->asJson($configModel);
+        return [
+            ['handle', 'string'],
+            ['type', 'string'],
+        ];
     }
 
+    /**
+     * @return string
+     */
+    public function toJson()
+    {
+        $arr = $this->toArray();
+        return Json::encode($arr);
+    }
 }
