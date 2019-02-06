@@ -15,6 +15,7 @@ use angellco\fffields\models\FieldConfig as FieldConfigModel;
 
 use Craft;
 use craft\base\Component;
+use craft\base\FieldInterface;
 
 /**
  * @author    Angell & Co
@@ -33,9 +34,19 @@ class FieldConfig extends Component
      */
     public function get($handle)
     {
+        /** @var FieldInterface $field */
+        $field = Craft::$app->fields->getFieldByHandle($handle);
+
+        if (!$field) {
+            throw new Exception('Invalid field handle: ' . $handle);
+        }
+
         return new FieldConfigModel([
-            'handle' => $handle,
-            'type' => 'text'
+            'name' => $field->name,
+            'handle' => $field->handle,
+            'instructions' => $field->instructions,
+            'type' => get_class($field),
+            'settings' => $field->getSettings()
         ]);
     }
 }

@@ -29,12 +29,27 @@ class FieldConfig extends Model
     /**
      * @var string
      */
+    public $name;
+
+    /**
+     * @var string
+     */
     public $handle;
 
     /**
      * @var string
      */
+    public $instructions;
+
+    /**
+     * @var string
+     */
     public $type;
+
+    /**
+     * @var array
+     */
+    public $settings;
 
     // Public Methods
     // =========================================================================
@@ -45,8 +60,11 @@ class FieldConfig extends Model
     public function rules()
     {
         return [
+            ['name', 'string'],
             ['handle', 'string'],
+            ['instructions', 'string'],
             ['type', 'string'],
+            ['settings', 'array'],
         ];
     }
 
