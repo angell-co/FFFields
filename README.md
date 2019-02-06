@@ -1,6 +1,6 @@
-# FFFields plugin for Craft CMS 3.x
+# Fabulous front-end fields for Craft CMS
 
-Fantastical front-end fields for Craft CMS.
+Assumptions: Vue & Tailwind
 
 ## Requirements
 
