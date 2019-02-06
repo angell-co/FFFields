@@ -1,0 +1,43 @@
+{
+    "name": "angellco/fffields",
+    "description": "Fantastical front-end fields for Craft CMS.",
+    "type": "craft-plugin",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "fffields",
+        "fields"
+    ],
+    "support": {
+        "docs": "https://github.com/angell-co/fffields/blob/master/README.md",
+        "issues": "https://github.com/angell-co/fffields/issues"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Angell & Co",
+            "homepage": "https://angell.io"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "angellco\\fffields\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "FFFields",
+        "handle": "fffields",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/angell-co/fffields/master/CHANGELOG.md",
+        "components": {
+            "config": "angellco\\spoon\\services\\Config"
+        },
+        "class": "angellco\\fffields\\FFFields"
+    }
+}
