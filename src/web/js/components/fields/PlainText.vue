@@ -1,11 +1,13 @@
 <template>
     <div>
         <input v-if="!config.settings.multiline"
+               v-model="model"
                :id="config.handle"
                :placeholder="config.settings.placeholder"
                type="text"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline">
         <textarea v-if="config.settings.multiline"
+                  v-model="model"
                   :id="config.handle"
                   :rows="config.settings.initialRows"
                   :placeholder="config.settings.placeholder"
@@ -19,6 +21,7 @@
         props: ['config'],
         data() {
             return {
+                model: null
             }
         }
     };

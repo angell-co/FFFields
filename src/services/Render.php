@@ -39,4 +39,16 @@ class Render extends Component
         $html = "<fff-field :config='".$configModel->toJson()."'></fff-field>";
         return TemplateHelper::raw($html);
     }
+
+    /**
+     * @param $handle
+     *
+     * @return string
+     */
+    public function config($handle)
+    {
+        /** @var FieldConfigModel $configModel */
+        $configModel = FFFields::$plugin->fieldConfig->get($handle);
+        return $configModel->toJson();
+    }
 }
