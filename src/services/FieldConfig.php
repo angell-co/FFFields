@@ -34,6 +34,16 @@ class FieldConfig extends Component
      */
     public function get($handle)
     {
+        if ($handle === 'title') {
+            return new FieldConfigModel([
+                'name' => 'Title',
+                'handle' => 'title',
+                'instructions' => '',
+                'type' => 'title',
+                'settings' => []
+            ]);
+        }
+
         /** @var FieldInterface $field */
         $field = Craft::$app->fields->getFieldByHandle($handle);
 

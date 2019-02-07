@@ -33,6 +33,7 @@
             let ft = '';
 
             switch (this.config.type) {
+                case 'title':
                 case 'craft\\fields\\PlainText':
                     ft = 'plainText';
                     break;

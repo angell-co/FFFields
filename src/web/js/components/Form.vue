@@ -11,7 +11,6 @@
 <script>
     export default {
         name: 'fff-form',
-        components: {},
         data() {
             return {
                 model: {}
