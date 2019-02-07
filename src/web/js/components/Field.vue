@@ -6,7 +6,12 @@
         </label>
         <p v-if="config.instructions"
            class="text-grey-dark text-xs italic mb-2">{{ config.instructions }}</p>
-        <fff-plain-text :config="config"></fff-plain-text>
+        <fff-plain-text v-if="fieldType === 'plainText'" :config="config"></fff-plain-text>
+
+        <div v-else class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
+            <p class="font-bold mb-1">Field not supported</p>
+            <p><code>{{config.type}}</code> is not currently supported, if you would like it to be then please <a href="https://github.com/angell-co/FFFields/issues" target="_blank" class="text-red-dark">file an issue</a>.</p>
+        </div>
     </div>
 </template>
 
@@ -21,7 +26,20 @@
             'fff-plain-text': PlainText
         },
         data() {
+            let ft = '';
+
+            switch (this.config.type) {
+                case 'craft\\fields\\PlainText':
+                    ft = 'plainText';
+                    break;
+
+                case 'craft\\redactor\\Field':
+                    ft = 'redactor';
+                    break;
+            }
+
             return {
+                fieldType: ft
             }
         }
     };
