@@ -14,12 +14,17 @@
         components: {},
         data() {
             return {
+                model: {}
             }
         },
         methods: {
             onSubmit () {
-                console.log('submitted');
-                console.log(this);
+                this.$slots.default.forEach(vNode => {
+                    if (typeof vNode.children !== "undefined") {
+                        let c = vNode.children[0].componentInstance;
+                        this.model[c.config.handle] = c.model;
+                    }
+                });
             }
         }
     };
