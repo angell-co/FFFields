@@ -9,6 +9,7 @@
            class="text-grey-dark text-xs italic mb-2">{{ config.instructions }}</p>
 
         <fff-plain-text v-if="fieldType === 'plainText'"
+                        v-model="model"
                         :config="config"></fff-plain-text>
 
         <div v-else class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
@@ -42,7 +43,8 @@
             }
 
             return {
-                fieldType: ft
+                fieldType: ft,
+                model: null
             }
         }
     };

@@ -23,6 +23,11 @@
             return {
                 model: null
             }
+        },
+        watch: {
+            model(val) {
+                this.$emit('input', val);
+            }
         }
     };
 </script>
