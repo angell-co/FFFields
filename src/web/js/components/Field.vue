@@ -4,6 +4,8 @@
                :for="config.handle">
             {{ config.name }}
         </label>
+        <p v-if="config.instructions"
+           class="text-grey-dark text-xs italic mb-2">{{ config.instructions }}</p>
         <fff-plain-text :config="config"></fff-plain-text>
     </div>
 </template>
