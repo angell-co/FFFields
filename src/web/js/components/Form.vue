@@ -2,8 +2,14 @@
     <form @submit.prevent="onSubmit">
         <slot></slot>
         <button type="submit"
+                v-if="!working"
                 class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Save
+        </button>
+        <button disabled="disabled"
+                v-if="working"
+                class="bg-grey text-white font-bold py-2 px-4 rounded">
+            Saving...
         </button>
     </form>
 </template>
@@ -16,12 +22,26 @@
         props: ['mutation'],
         data() {
             return {
+                working: false,
                 model: {},
                 gqlTypes: "",
                 gqlVars: "",
             }
         },
         methods: {
+
+            clearFields () {
+                this.$slots.default.forEach(vNode => {
+                    if (typeof vNode.children !== "undefined") {
+                        let field = vNode.children[0].componentInstance;
+                        if (typeof field.$refs.input !== "undefined") {
+                            field.$refs.input.model = null;
+                            field.$refs.input.$v.$reset();
+                        }
+                    }
+                });
+            },
+
             onSubmit () {
 
                 let hasErrors = false;
@@ -58,6 +78,9 @@
                 // Trim trailing comma
                 this.gqlVars = this.gqlVars.slice(0, -1)
 
+                // Tell the user we’re doing something
+                this.working = true;
+
                 // Call to the graphql mutation
                 this.$apollo.mutate({
                     // Query
@@ -65,21 +88,32 @@
                         mutation (${this.gqlTypes}) {
                             ${this.mutation}(${this.gqlVars}) {
                                 id
+                                slug
                                 url
+                                ${Object.keys(this.model).join(" ")}
                             }
                         }
                     `,
                     // Parameters
                     variables: this.model,
-                }).then((data) => {
-                    // Result
-                    console.log(data)
-                }).catch((error) => {
-                    // Error
-                    console.error(error)
                 })
-            },
 
+                // Success
+                .then((data) => {
+                    this.working = false;
+                    this.clearFields();
+
+
+                    console.log(data);
+                })
+
+                // Failure
+                .catch((error) => {
+
+                    this.working = false;
+                    console.error(error);
+                });
+            }
         }
     };
 </script>
