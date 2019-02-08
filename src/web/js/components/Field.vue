@@ -9,7 +9,7 @@
         <p v-if="config.instructions"
            class="text-grey-dark text-xs italic mb-2">{{ config.instructions }}</p>
 
-        <fff-plain-text v-if="fieldType === 'plainText'"
+        <fff-plain-text v-if="config.vueFieldType === 'plainText'"
                         ref="input"
                         :config="config"></fff-plain-text>
 
@@ -29,24 +29,6 @@
         props: ['config'],
         components: {
             'fff-plain-text': PlainText
-        },
-        data() {
-            let ft = '';
-
-            switch (this.config.type) {
-                case 'title':
-                case 'craft\\fields\\PlainText':
-                    ft = 'plainText';
-                    break;
-
-                case 'craft\\redactor\\Field':
-                    ft = 'redactor';
-                    break;
-            }
-
-            return {
-                fieldType: ft
-            }
         }
     };
 </script>

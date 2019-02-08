@@ -15,6 +15,7 @@ use angellco\fffields\FFFields;
 use Craft;
 use craft\base\Model;
 use craft\helpers\Json;
+use craft\validators\ArrayValidator;
 
 /**
  * @author    Angell & Co
@@ -52,6 +53,17 @@ class FieldConfig extends Model
     public $type;
 
     /**
+     * @var string
+     */
+    public $gqlType;
+
+
+    /**
+     * @var string
+     */
+    public $vueFieldType;
+
+    /**
      * @var array
      */
     public $settings;
@@ -60,16 +72,39 @@ class FieldConfig extends Model
     // =========================================================================
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules()
     {
         $rules = parent::rules();
         $rules[] = [['name', 'handle', 'type'], 'required'];
-        $rules[] = [['name', 'handle', 'instructions', 'type'], 'string'];
+        $rules[] = [['name', 'handle', 'instructions', 'type', 'gqlType', 'vueFieldType'], 'string'];
         $rules[] = [['required'], 'boolean'];
         $rules[] = [['settings'], ArrayValidator::class];
         return $rules;
+    }
+
+    /**
+     * Sets all of the types on the model needed for Vue and the GraphQL document
+     */
+    public function setTypes()
+    {
+        switch ($this->type) {
+            case 'title':
+            case 'craft\fields\PlainText':
+                $this->gqlType = 'String';
+                $this->vueFieldType = 'plainText';
+                break;
+
+            case 'craft\redactor\Field':
+                $this->gqlType = 'String';
+                $this->vueFieldType = 'redactor';
+                break;
+        }
+
+        if ($this->required) {
+            $this->gqlType .= "!";
+        }
     }
 
     /**
@@ -77,7 +112,6 @@ class FieldConfig extends Model
      */
     public function toJson()
     {
-        $arr = $this->toArray();
-        return Json::encode($arr);
+        return Json::encode($this->toArray());
     }
 }
