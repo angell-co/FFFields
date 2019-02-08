@@ -9,6 +9,8 @@
 </template>
 
 <script>
+    import gql from 'graphql-tag';
+
     export default {
         name: 'fff-form',
         data() {
@@ -24,7 +26,29 @@
                         this.model[c.config.handle] = c.model;
                     }
                 });
-            }
+
+                // Call to the graphql mutation
+                this.$apollo.mutate({
+                    // Query
+                    mutation: gql`mutation ($title: String!) {
+                        upsertNews(title: $title) {
+                            id
+                            url
+                        }
+                    }`,
+                    // Parameters
+                    variables: {
+                        title: this.model.title,
+                    },
+                }).then((data) => {
+                    // Result
+                    console.log(data)
+                }).catch((error) => {
+                    // Error
+                    console.error(error)
+                })
+            },
+
         }
     };
 </script>

@@ -15,6 +15,7 @@ use angellco\fffields\models\FieldConfig as FieldConfigModel;
 
 use Craft;
 use craft\base\Component;
+use craft\helpers\Json;
 use craft\helpers\Template as TemplateHelper;
 
 /**
@@ -28,9 +29,22 @@ class Render extends Component
     // =========================================================================
 
     /**
+     * @return \Twig_Markup
+     */
+    public function includeJs()
+    {
+        $data = [
+            'gqlEndpoint' => Craft::parseEnv('$FFF_GQL_ENDPOINT'),
+            'token' => Craft::parseEnv('$FFF_GQL_TOKEN')
+        ];
+        $js = "<script>window.fffields = ".Json::encode($data)."</script>";
+        return TemplateHelper::raw($js);
+    }
+
+    /**
      * @param $handle
      *
-     * @return mixed
+     * @return \Twig_Markup
      */
     public function render($handle)
     {
