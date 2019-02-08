@@ -13,6 +13,7 @@
 
     export default {
         name: 'fff-form',
+        props: ['mutation'],
         data() {
             return {
                 model: {}
@@ -20,26 +21,46 @@
         },
         methods: {
             onSubmit () {
+
+                let hasErrors = false;
+
+                // Compile field data and validate
                 this.$slots.default.forEach(vNode => {
                     if (typeof vNode.children !== "undefined") {
-                        let c = vNode.children[0].componentInstance;
-                        this.model[c.config.handle] = c.model;
+                        let field = vNode.children[0].componentInstance;
+
+                        if (typeof field.$refs.input !== "undefined") {
+
+                            let input = field.$refs.input;
+
+                            this.model[input.config.handle] = input.model;
+
+                            input.$v.$touch();
+                            if (input.$v.$invalid) {
+                                hasErrors = true;
+                            }
+                        }
+
                     }
                 });
+
+                if (hasErrors) {
+                    return;
+                }
 
                 // Call to the graphql mutation
                 this.$apollo.mutate({
                     // Query
-                    mutation: gql`mutation ($title: String!) {
-                        upsertNews(title: $title) {
-                            id
-                            url
+                    mutation: gql`
+                        mutation ($title: String!) {
+                            ${this.mutation}(title: $title) {
+                                id
+                                url
+                            }
                         }
-                    }`,
+                    `,
                     // Parameters
-                    variables: {
-                        title: this.model.title,
-                    },
+                    variables: this.model,
                 }).then((data) => {
                     // Result
                     console.log(data)
