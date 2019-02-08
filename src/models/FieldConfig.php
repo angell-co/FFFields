@@ -116,6 +116,11 @@ class FieldConfig extends Model
                 $this->vueFieldType = 'lightswitch';
                 break;
 
+            case 'craft\fields\Dropdown':
+                $this->gqlType = 'DropdownEnum';
+                $this->vueFieldType = 'dropdown';
+                break;
+
             case 'craft\redactor\Field':
                 $this->gqlType = 'String';
                 $this->vueFieldType = 'redactor';
@@ -140,6 +145,28 @@ class FieldConfig extends Model
             case 'craft\fields\Lightswitch':
                 if (is_null($value)) {
                     $this->value = (bool) $this->settings['default'];
+                } else {
+                    $this->value = $value;
+                }
+                break;
+
+            case 'craft\fields\Dropdown':
+                if (is_null($value)) {
+
+                    // Loop options and pick the first one marked as default
+                    foreach ($this->settings['options'] as $option) {
+                        if ($option['default']) {
+                            $this->value = $option['value'];
+                            break;
+                        }
+                    }
+
+                    // If we got this far and its still null then there is no
+                    // default so pick the first one
+                    if (is_null($this->value)) {
+                        $this->value = $this->settings['options'][0]['value'];
+                    }
+
                 } else {
                     $this->value = $value;
                 }
