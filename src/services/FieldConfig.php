@@ -28,17 +28,19 @@ class FieldConfig extends Component
     // =========================================================================
 
     /**
-     * @param $handle
+     * @param      $handle
+     * @param bool $required
      *
-     * @return ConfigModel
+     * @return FieldConfigModel
      */
-    public function get($handle)
+    public function get($handle, $required = false)
     {
         if ($handle === 'title') {
             return new FieldConfigModel([
                 'name' => 'Title',
                 'handle' => 'title',
                 'instructions' => '',
+                'required' => true,
                 'type' => 'title',
                 'settings' => []
             ]);
@@ -55,6 +57,7 @@ class FieldConfig extends Component
             'name' => $field->name,
             'handle' => $field->handle,
             'instructions' => $field->instructions,
+            'required' => $required,
             'type' => get_class($field),
             'settings' => $field->getSettings()
         ]);

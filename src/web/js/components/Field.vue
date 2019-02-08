@@ -3,6 +3,7 @@
         <label class="block text-grey-darker text-sm font-bold mb-2"
                :for="config.handle">
             {{ config.name }}
+            <span v-if="config.required">*</span>
         </label>
 
         <p v-if="config.instructions"

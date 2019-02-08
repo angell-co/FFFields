@@ -42,6 +42,11 @@ class FieldConfig extends Model
     public $instructions;
 
     /**
+     * @var bool
+     */
+    public $required;
+
+    /**
      * @var string
      */
     public $type;
@@ -59,13 +64,12 @@ class FieldConfig extends Model
      */
     public function rules()
     {
-        return [
-            ['name', 'string'],
-            ['handle', 'string'],
-            ['instructions', 'string'],
-            ['type', 'string'],
-            ['settings', 'array'],
-        ];
+        $rules = parent::rules();
+        $rules[] = [['name', 'handle', 'type'], 'required'];
+        $rules[] = [['name', 'handle', 'instructions', 'type'], 'string'];
+        $rules[] = [['required'], 'boolean'];
+        $rules[] = [['settings'], ArrayValidator::class];
+        return $rules;
     }
 
     /**
