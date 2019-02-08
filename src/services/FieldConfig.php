@@ -42,7 +42,9 @@ class FieldConfig extends Component
                 'instructions' => '',
                 'required' => true,
                 'type' => 'title',
-                'settings' => []
+                'settings' => [
+                    'charLimit' => 255
+                ]
             ]);
         }
 
