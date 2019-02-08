@@ -35,8 +35,10 @@
                     if (typeof vNode.children !== "undefined") {
                         let field = vNode.children[0].componentInstance;
                         if (typeof field.$refs.input !== "undefined") {
-                            field.$refs.input.model = null;
-                            field.$refs.input.$v.$reset();
+                            field.$refs.input.model = field.$refs.input.config.value;
+                            if (typeof field.$refs.input.$v !== "undefined") {
+                                field.$refs.input.$v.$reset();
+                            }
                         }
                     }
                 });
@@ -61,9 +63,11 @@
                             this.gqlTypes += "$"+input.config.handle+":"+input.config.gqlType+",";
                             this.gqlVars += input.config.handle+":$"+input.config.handle+",";
 
-                            input.$v.$touch();
-                            if (input.$v.$invalid) {
-                                hasErrors = true;
+                            if (typeof input.$v !== "undefined") {
+                                input.$v.$touch();
+                                if (input.$v.$invalid) {
+                                    hasErrors = true;
+                                }
                             }
                         }
 

@@ -43,6 +43,11 @@ class FieldConfig extends Model
     public $instructions;
 
     /**
+     * @var mixed
+     */
+    public $value;
+
+    /**
      * @var bool
      */
     public $required;
@@ -96,6 +101,21 @@ class FieldConfig extends Model
                 $this->vueFieldType = 'plainText';
                 break;
 
+            case 'craft\fields\Url':
+                $this->gqlType = 'String';
+                $this->vueFieldType = 'url';
+                break;
+
+            case 'craft\fields\Email':
+                $this->gqlType = 'String';
+                $this->vueFieldType = 'email';
+                break;
+
+            case 'craft\fields\Lightswitch':
+                $this->gqlType = 'Boolean';
+                $this->vueFieldType = 'lightswitch';
+                break;
+
             case 'craft\redactor\Field':
                 $this->gqlType = 'String';
                 $this->vueFieldType = 'redactor';
@@ -105,6 +125,30 @@ class FieldConfig extends Model
         if ($this->required) {
             $this->gqlType .= "!";
         }
+    }
+
+    /**
+     * Sets the value of the field with defaults if possible
+     *
+     * @param null $value
+     */
+    public function setValue($value = null)
+    {
+
+        switch ($this->type) {
+
+            case 'craft\fields\Lightswitch':
+                if (is_null($value)) {
+                    $this->value = (bool) $this->settings['default'];
+                } else {
+                    $this->value = $value;
+                }
+                break;
+
+            default:
+                $this->value = $value;
+        }
+
     }
 
     /**

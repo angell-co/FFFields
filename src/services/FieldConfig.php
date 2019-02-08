@@ -29,11 +29,12 @@ class FieldConfig extends Component
 
     /**
      * @param      $handle
+     * @param null $value
      * @param bool $required
      *
      * @return FieldConfigModel
      */
-    public function get($handle, $required = false)
+    public function get($handle, $value = null, $required = false)
     {
         // Sort out the basic model
         if ($handle === 'title') {
@@ -42,6 +43,7 @@ class FieldConfig extends Component
                 'name' => 'Title',
                 'handle' => 'title',
                 'instructions' => '',
+                'value' => null,
                 'required' => true,
                 'type' => 'title',
                 'settings' => [
@@ -67,9 +69,11 @@ class FieldConfig extends Component
             ]);
         }
 
-
         // Set the types needed by Vue and GraphQL
         $model->setTypes();
+
+        // Set the value
+        $model->setValue($value);
 
         // Validate
         if (!$model->validate()) {

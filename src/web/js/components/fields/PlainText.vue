@@ -33,7 +33,7 @@
         mixins: [validationMixin],
         data() {
             return {
-                model: null,
+                model: this.config.value,
                 maxLength: (typeof this.config.settings.charLimit !== "undefined" && this.config.settings.charLimit !== "") ? this.config.settings.charLimit : false
             }
         },
