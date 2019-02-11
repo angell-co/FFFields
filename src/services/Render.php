@@ -42,14 +42,16 @@ class Render extends Component
     }
 
     /**
-     * @param $handle
+     * @param      $handle
+     * @param null $value
+     * @param bool $required
      *
      * @return \Twig_Markup
      */
-    public function render($handle)
+    public function render($handle, $value = null, $required = false)
     {
         /** @var FieldConfigModel $configModel */
-        $configModel = FFFields::$plugin->fieldConfig->get($handle);
+        $configModel = FFFields::$plugin->fieldConfig->get($handle, $value, $required);
         $html = "<fff-field :config='".$configModel->toJson()."'></fff-field>";
         return TemplateHelper::raw($html);
     }

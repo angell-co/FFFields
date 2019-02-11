@@ -1,11 +1,18 @@
 <template>
     <div>
-        <input v-model="model"
-               :id="config.handle"
-               :placeholder="config.settings.placeholder"
-               type="text"
-               class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+        <label v-for="opt in config.settings.options"
+               :for="opt.name"
+               class="block text-grey font-bold"
                :class="{'border-red': $v.model.$error}">
+            <input  v-model="model"
+                    :value="opt.value"
+                    :id="opt.name"
+                    type="radio"
+                    class="mr-2 leading-tight">
+            <span class="text-sm">
+                {{opt.label}}
+            </span>
+        </label>
 
         <div v-if="$v.model.$error" class="text-red text-xs italic mt-2">
             <p v-if="!$v.model.required">{{config.name}} cannot be blank</p>
@@ -18,7 +25,7 @@
     import { required,requiredIf } from 'vuelidate/lib/validators';
 
     export default {
-        name: 'fff-checkboxes',
+        name: 'fff-radiobuttons',
         props: ['config'],
         mixins: [validationMixin],
         data() {

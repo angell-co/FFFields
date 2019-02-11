@@ -187,6 +187,22 @@ class FieldConfig extends Model
                 }
                 break;
 
+            case 'craft\fields\RadioButtons':
+                if (is_null($value)) {
+
+                    // Loop options and pick the first one marked as default
+                    foreach ($this->settings['options'] as $option) {
+                        if ($option['default']) {
+                            $this->value = $option['value'];
+                            break;
+                        }
+                    }
+
+                } else {
+                    $this->value = $value;
+                }
+                break;
+
             case 'craft\fields\Checkboxes':
                 if (is_null($value)) {
 
