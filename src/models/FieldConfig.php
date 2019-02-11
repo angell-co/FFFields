@@ -136,6 +136,11 @@ class FieldConfig extends Model
                 $this->vueFieldType = 'checkboxes';
                 break;
 
+            case 'craft\fields\Number':
+                $this->gqlType = 'Float';
+                $this->vueFieldType = 'number';
+                break;
+
             case 'craft\redactor\Field':
                 $this->gqlType = 'String';
                 $this->vueFieldType = 'redactor';
@@ -219,6 +224,15 @@ class FieldConfig extends Model
                     $this->value = $value;
                 }
                 break;
+
+            case 'craft\fields\Number':
+                if (is_null($value)) {
+                    $this->value = $this->settings['defaultValue'];
+                } else {
+                    $this->value = $value;
+                }
+                break;
+
 
             default:
                 $this->value = $value;
