@@ -6,16 +6,16 @@
                :min="config.settings.min"
                :max="config.settings.max"
                :step="step"
-               type="number"
+               type="text"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
                :class="{'border-red': $v.model.$error}">
 
         <div v-if="$v.model.$error" class="text-red text-xs italic mt-2">
             <p v-if="!$v.model.required">{{config.name}} cannot be blank</p>
-            <p v-if="config.settings.decimals === 0 && !$v.model.integer">{{config.name}} must be a number</p>
-            <p v-if="config.settings.decimals > 0 && !$v.model.decimal">{{config.name}} must be a number</p>
-            <p v-if="!$v.model.minValue">{{config.name}} must be no less than {{config.settings.min}}</p>
-            <p v-if="!$v.model.maxValue">{{config.name}} must be no greater than {{config.settings.max}}</p>
+            <p v-if="integer && !$v.model.integer">{{config.name}} must be a number</p>
+            <p v-if="decimal && !$v.model.decimal">{{config.name}} must be a number</p>
+            <p v-if="minValue && !$v.model.minValue">{{config.name}} must be no less than {{config.settings.min}}</p>
+            <p v-if="maxValue && !$v.model.maxValue">{{config.name}} must be no greater than {{config.settings.max}}</p>
         </div>
     </div>
 </template>
@@ -31,8 +31,10 @@
         data() {
             return {
                 model: this.config.value,
-                minValue: (typeof this.config.settings.min !== "") ? this.config.settings.min : false,
-                maxValue: (typeof this.config.settings.max !== "") ? this.config.settings.max : false,
+                minValue: this.config.settings.min !== null ? this.config.settings.min : false,
+                maxValue: this.config.settings.max !== null ? this.config.settings.max : false,
+                decimal: Number(this.config.settings.decimals) > 0 ? true : false,
+                integer: Number(this.config.settings.decimals) === 0 ? true : false,
                 step: this.config.settings.decimals ? "0."+String("0").repeat(this.config.settings.decimals-1)+"1" : ""
             }
         },
@@ -45,9 +47,11 @@
                 })
             }
             
-            if (this.config.settings.decimals > 0) {
+            if (this.decimal) {
                 validationSchema.decimal = decimal;
-            } else {
+            }
+
+            if (this.integer) {
                 validationSchema.integer = integer;
             }
 
