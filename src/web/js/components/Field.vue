@@ -45,6 +45,10 @@
                     ref="input"
                     :config="config"></fff-number>
 
+        <fff-matrix v-else-if="config.vueFieldType === 'matrix'"
+                    ref="input"
+                    :config="config"></fff-matrix>
+
         <div v-else class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
             <p class="font-bold mb-1">Field not supported</p>
             <p><code>{{config.type}}</code> is not currently supported, if you would like it to be then please <a href="https://github.com/angell-co/FFFields/issues" target="_blank" class="text-red-dark">file an issue</a>.</p>
@@ -63,6 +67,7 @@
     import RadioButtons from './fields/RadioButtons.vue';
     import Checkboxes from './fields/Checkboxes.vue';
     import Number from './fields/Number.vue';
+    import Matrix from './fields/Matrix.vue';
 
     export default {
         name: 'fff-field',
@@ -76,7 +81,8 @@
             'fff-multi-select': MultiSelect,
             'fff-radio-buttons': RadioButtons,
             'fff-checkboxes': Checkboxes,
-            'fff-number': Number
+            'fff-number': Number,
+            'fff-matrix': Matrix
         }
     };
 </script>

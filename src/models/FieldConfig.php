@@ -141,6 +141,11 @@ class FieldConfig extends Model
                 $this->vueFieldType = 'number';
                 break;
 
+            case 'craft\fields\Matrix':
+                $this->gqlType = '[MatrixInput]';
+                $this->vueFieldType = 'matrix';
+                break;
+
             case 'craft\redactor\Field':
                 $this->gqlType = 'String';
                 $this->vueFieldType = 'redactor';
