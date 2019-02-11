@@ -204,6 +204,7 @@ class FieldConfig extends Model
                 break;
 
             case 'craft\fields\Checkboxes':
+            case 'craft\fields\MultiSelect':
                 if (is_null($value)) {
 
                     $this->value = [];

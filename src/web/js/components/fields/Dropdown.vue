@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="inline-block relative w-64">
+        <div class="inline-block relative w-full">
             <select v-model="model"
                     :id="config.handle"
-                    class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-3 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                     :class="{'border-red': $v.model.$error}">
                 <option v-for="opt in config.settings.options" :value="opt.value">{{opt.label}}</option>
             </select>
