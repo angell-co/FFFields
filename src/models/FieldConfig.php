@@ -121,6 +121,21 @@ class FieldConfig extends Model
                 $this->vueFieldType = 'dropdown';
                 break;
 
+            case 'craft\fields\MultiSelect':
+                $this->gqlType = '[MultiSelectEnum]';
+                $this->vueFieldType = 'multiselect';
+                break;
+
+            case 'craft\fields\RadioButtons':
+                $this->gqlType = 'RadioButtonsEnum';
+                $this->vueFieldType = 'radiobuttons';
+                break;
+
+            case 'craft\fields\Checkboxes':
+                $this->gqlType = '[CheckboxesEnum]';
+                $this->vueFieldType = 'checkboxes';
+                break;
+
             case 'craft\redactor\Field':
                 $this->gqlType = 'String';
                 $this->vueFieldType = 'redactor';
@@ -165,6 +180,22 @@ class FieldConfig extends Model
                     // default so pick the first one
                     if (is_null($this->value)) {
                         $this->value = $this->settings['options'][0]['value'];
+                    }
+
+                } else {
+                    $this->value = $value;
+                }
+                break;
+
+            case 'craft\fields\Checkboxes':
+                if (is_null($value)) {
+
+                    $this->value = [];
+
+                    foreach ($this->settings['options'] as $option) {
+                        if ($option['default']) {
+                            $this->value[] = $option['value'];
+                        }
                     }
 
                 } else {

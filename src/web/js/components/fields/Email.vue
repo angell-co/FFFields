@@ -28,7 +28,6 @@
             }
         },
         validations () {
-
             return {
                 model: {
                     required: requiredIf(() => {

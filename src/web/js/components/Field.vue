@@ -29,6 +29,18 @@
                       ref="input"
                       :config="config"></fff-dropdown>
 
+        <fff-multiselect v-else-if="config.vueFieldType === 'multiselect'"
+                         ref="input"
+                         :config="config"></fff-multiselect>
+
+        <fff-radiobuttons v-else-if="config.vueFieldType === 'radiobuttons'"
+                          ref="input"
+                          :config="config"></fff-radiobuttons>
+
+        <fff-checkboxes v-else-if="config.vueFieldType === 'checkboxes'"
+                        ref="input"
+                        :config="config"></fff-checkboxes>
+
         <div v-else class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
             <p class="font-bold mb-1">Field not supported</p>
             <p><code>{{config.type}}</code> is not currently supported, if you would like it to be then please <a href="https://github.com/angell-co/FFFields/issues" target="_blank" class="text-red-dark">file an issue</a>.</p>
@@ -43,6 +55,9 @@
     import Email from './fields/Email.vue';
     import Lightswitch from './fields/Lightswitch.vue';
     import Dropdown from './fields/Dropdown.vue';
+    import MultiSelect from './fields/MultiSelect.vue';
+    import RadioButtons from './fields/RadioButtons.vue';
+    import Checkboxes from './fields/Checkboxes.vue';
 
     export default {
         name: 'fff-field',
@@ -52,7 +67,10 @@
             'fff-url': Url,
             'fff-email': Email,
             'fff-lightswitch': Lightswitch,
-            'fff-dropdown': Dropdown
+            'fff-dropdown': Dropdown,
+            'fff-multiselect': MultiSelect,
+            'fff-radiobuttons': RadioButtons,
+            'fff-checkboxes': Checkboxes
         }
     };
 </script>
