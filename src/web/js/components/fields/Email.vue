@@ -3,7 +3,7 @@
         <input v-model="model"
                :id="config.handle"
                :placeholder="config.settings.placeholder"
-               type="text"
+               type="email"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
                :class="{'border-red': $v.model.$error}">
 

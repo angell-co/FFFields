@@ -29,13 +29,13 @@
                       ref="input"
                       :config="config"></fff-dropdown>
 
-        <fff-multiselect v-else-if="config.vueFieldType === 'multiselect'"
+        <fff-multi-select v-else-if="config.vueFieldType === 'multiselect'"
                          ref="input"
-                         :config="config"></fff-multiselect>
+                         :config="config"></fff-multi-select>
 
-        <fff-radiobuttons v-else-if="config.vueFieldType === 'radiobuttons'"
+        <fff-radio-buttons v-else-if="config.vueFieldType === 'radiobuttons'"
                           ref="input"
-                          :config="config"></fff-radiobuttons>
+                          :config="config"></fff-radio-buttons>
 
         <fff-checkboxes v-else-if="config.vueFieldType === 'checkboxes'"
                         ref="input"
@@ -68,9 +68,9 @@
             'fff-email': Email,
             'fff-lightswitch': Lightswitch,
             'fff-dropdown': Dropdown,
-            'fff-multiselect': MultiSelect,
-            'fff-radiobuttons': RadioButtons,
-            'fff-checkboxes': Checkboxes
+            'fff-multi-select': MultiSelect,
+            'fff-radio-buttons': RadioButtons,
+            'fff-checkboxes': Checkboxes,
         }
     };
 </script>

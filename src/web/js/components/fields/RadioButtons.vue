@@ -25,7 +25,7 @@
     import { required,requiredIf } from 'vuelidate/lib/validators';
 
     export default {
-        name: 'fff-radiobuttons',
+        name: 'fff-radio-buttons',
         props: ['config'],
         mixins: [validationMixin],
         data() {
