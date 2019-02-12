@@ -45,9 +45,9 @@
                     ref="input"
                     :config="config"></fff-number>
 
-        <fff-matrix v-else-if="config.vueFieldType === 'matrix'"
-                    ref="input"
-                    :config="config"></fff-matrix>
+        <!--<fff-matrix v-else-if="config.vueFieldType === 'matrix'"-->
+                    <!--ref="input"-->
+                    <!--:config="config"></fff-matrix>-->
 
         <div v-else class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
             <p class="font-bold mb-1">Field not supported</p>
