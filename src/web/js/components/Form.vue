@@ -19,7 +19,17 @@
 
     export default {
         name: 'fff-form',
-        props: ['mutation'],
+        props: {
+            mutation: String,
+            enabled: {
+                type: Boolean,
+                default: true
+            },
+            redirect: {
+                type: String,
+                default: null
+            }
+        },
         data() {
             return {
                 working: false,
@@ -79,8 +89,19 @@
                     return;
                 }
 
+                // Add any special attributes to the main model
+                let postVars = {
+                    ...this.model,
+                    enabled: this.enabled
+                };
+
                 // Trim trailing comma
-                this.gqlVars = this.gqlVars.slice(0, -1)
+                this.gqlTypes = this.gqlTypes.slice(0, -1);
+                this.gqlVars = this.gqlVars.slice(0, -1);
+
+                // Add the enabled state
+                this.gqlTypes += ",$enabled:Boolean";
+                this.gqlVars += ",enabled:$enabled";
 
                 // Tell the user we’re doing something
                 this.working = true;
@@ -94,19 +115,18 @@
                                 id
                                 slug
                                 url
-                                ${Object.keys(this.model).join(" ")}
+                                ${Object.keys(postVars).join(" ")}
                             }
                         }
                     `,
                     // Parameters
-                    variables: this.model,
+                    variables: postVars,
                 })
 
                 // Success
                 .then((data) => {
                     this.working = false;
                     this.clearFields();
-
 
                     console.log(data);
                 })
