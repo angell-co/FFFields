@@ -137,7 +137,11 @@ class FieldConfig extends Model
                 break;
 
             case 'craft\fields\Number':
-                $this->gqlType = 'Float';
+                if ($this->settings['decimals'] > 0) {
+                    $this->gqlType = 'Float';
+                } else {
+                    $this->gqlType = 'Int';
+                }
                 $this->vueFieldType = 'fff-number';
                 break;
 

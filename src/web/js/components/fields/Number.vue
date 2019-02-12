@@ -33,8 +33,8 @@
                 model: this.config.value,
                 minValue: this.config.settings.min !== null ? this.config.settings.min : false,
                 maxValue: this.config.settings.max !== null ? this.config.settings.max : false,
-                decimal: Number(this.config.settings.decimals) > 0 ? true : false,
-                integer: Number(this.config.settings.decimals) === 0 ? true : false,
+                decimal: this.config.gqlType === 'Float',
+                integer: this.config.gqlType === 'Int',
                 step: this.config.settings.decimals ? "0."+String("0").repeat(this.config.settings.decimals-1)+"1" : ""
             }
         },
