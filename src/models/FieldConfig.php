@@ -98,57 +98,57 @@ class FieldConfig extends Model
             case 'title':
             case 'craft\fields\PlainText':
                 $this->gqlType = 'String';
-                $this->vueFieldType = 'plainText';
+                $this->vueFieldType = 'fff-plain-text';
                 break;
 
             case 'craft\fields\Url':
                 $this->gqlType = 'String';
-                $this->vueFieldType = 'url';
+                $this->vueFieldType = 'fff-url';
                 break;
 
             case 'craft\fields\Email':
                 $this->gqlType = 'String';
-                $this->vueFieldType = 'email';
+                $this->vueFieldType = 'fff-email';
                 break;
 
             case 'craft\fields\Lightswitch':
                 $this->gqlType = 'Boolean';
-                $this->vueFieldType = 'lightswitch';
+                $this->vueFieldType = 'fff-lightswitch';
                 break;
 
             case 'craft\fields\Dropdown':
                 $this->gqlType = 'DropdownEnum';
-                $this->vueFieldType = 'dropdown';
+                $this->vueFieldType = 'fff-dropdown';
                 break;
 
             case 'craft\fields\MultiSelect':
                 $this->gqlType = '[MultiSelectEnum]';
-                $this->vueFieldType = 'multiselect';
+                $this->vueFieldType = 'fff-multi-select';
                 break;
 
             case 'craft\fields\RadioButtons':
                 $this->gqlType = 'RadioButtonsEnum';
-                $this->vueFieldType = 'radiobuttons';
+                $this->vueFieldType = 'fff-radio-buttons';
                 break;
 
             case 'craft\fields\Checkboxes':
                 $this->gqlType = '[CheckboxesEnum]';
-                $this->vueFieldType = 'checkboxes';
+                $this->vueFieldType = 'fff-checkboxes';
                 break;
 
             case 'craft\fields\Number':
                 $this->gqlType = 'Float';
-                $this->vueFieldType = 'number';
+                $this->vueFieldType = 'fff-number';
                 break;
 
             case 'craft\fields\Matrix':
                 $this->gqlType = '[MatrixInput]';
-                $this->vueFieldType = 'matrix';
+                $this->vueFieldType = 'fff-matrix';
                 break;
 
             case 'craft\redactor\Field':
                 $this->gqlType = 'String';
-                $this->vueFieldType = 'redactor';
+                $this->vueFieldType = 'fff-redactor';
                 break;
         }
 
