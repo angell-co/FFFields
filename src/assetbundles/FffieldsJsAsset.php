@@ -15,13 +15,13 @@ use craft\web\AssetBundle;
 use craft\web\View;
 
 /**
- * FffieldsAsset AssetBundle
+ * FffieldsJsAsset AssetBundle
  *
  * @author    Angell & Co
  * @package   FFFields
  * @since     0.0.1
  */
-class FffieldsAsset extends AssetBundle
+class FffieldsJsAsset extends AssetBundle
 {
     // Public Methods
     // =========================================================================
@@ -38,10 +38,6 @@ class FffieldsAsset extends AssetBundle
         // when this asset bundle is registered
         $this->js = [
             'js/fffields.js',
-        ];
-
-        $this->css = [
-            'css/fffields.css',
         ];
 
         parent::init();

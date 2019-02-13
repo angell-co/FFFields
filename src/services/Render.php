@@ -29,11 +29,17 @@ class Render extends Component
     // =========================================================================
 
     /**
+     * @param bool $includeCss
+     *
      * @return \Twig_Markup
+     * @throws \yii\base\InvalidConfigException
      */
-    public function includeAssets()
+    public function includeAssets($includeCss = true)
     {
-        Craft::$app->view->registerAssetBundle("angellco\\fffields\\assetbundles\\FffieldsAsset");
+        Craft::$app->view->registerAssetBundle("angellco\\fffields\\assetbundles\\FffieldsJsAsset");
+        if ($includeCss) {
+            Craft::$app->view->registerAssetBundle("angellco\\fffields\\assetbundles\\FffieldsCssAsset");
+        }
         $data = [
             'gqlEndpoint' => Craft::parseEnv('$FFF_GQL_ENDPOINT'),
             'token' => Craft::parseEnv('$FFF_GQL_TOKEN')
