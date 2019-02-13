@@ -31,7 +31,6 @@ class Render extends Component
     /**
      * @param bool $includeCss
      *
-     * @return \Twig_Markup
      * @throws \yii\base\InvalidConfigException
      */
     public function includeAssets($includeCss = true)
@@ -40,6 +39,15 @@ class Render extends Component
         if ($includeCss) {
             Craft::$app->view->registerAssetBundle("angellco\\fffields\\assetbundles\\FffieldsCssAsset");
         }
+
+        $this->outputState();
+    }
+
+    /**
+     * @return \Twig_Markup
+     */
+    public function outputState()
+    {
         $data = [
             'gqlEndpoint' => Craft::parseEnv('$FFF_GQL_ENDPOINT'),
             'token' => Craft::parseEnv('$FFF_GQL_TOKEN')
