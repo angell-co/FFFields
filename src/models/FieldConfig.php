@@ -251,7 +251,11 @@ class FieldConfig extends Model
                 if (is_null($value)) {
                     $this->value = $this->settings['defaultValue'];
                 } else {
-                    $this->value = $value;
+                    if ($this->settings['decimals'] > 0) {
+                        $this->value = floatval($value);
+                    } else {
+                        $this->value = (int) $value;
+                    }
                 }
                 break;
 
