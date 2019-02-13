@@ -72,6 +72,28 @@ class Render extends Component
     }
 
     /**
+     * @param      $mutation
+     * @param bool $enabled
+     * @param null $redirect
+     *
+     * @return \Twig_Markup
+     */
+    public function formStart($mutation, $enabled = true, $redirect = null)
+    {
+        $html = "<fff-form :mutation=\"'${mutation}'\" :enabled=\"".($enabled ? 'true' : 'false')."\" :redirect=\"'${redirect}'\">";
+        return TemplateHelper::raw($html);
+    }
+
+    /**
+     * @return \Twig_Markup
+     */
+    public function formEnd()
+    {
+        $html = "</fff-form>";
+        return TemplateHelper::raw($html);
+    }
+
+    /**
      * @param      $handle
      * @param null $value
      * @param bool $required
