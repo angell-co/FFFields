@@ -4,13 +4,13 @@ Fabulous front-end fields for Craft
 
 ![Banner](resources/img/banner.png)
 
-FFFields gives you a complete toolkit to create fabulous front-end forms and dashboards. You can hook up your fields to Craft via the CraftQL plugin or roll your own solution, you choose.
+FFFields gives you a complete toolkit to create fabulous front-end forms and dashboards. You can hook up your fields to Craft via the [CraftQL plugin](https://plugins.craftcms.com/craftql) or roll your own solution, you choose.
 
 This plugin makes use of [Vue.js](https://vuejs.org/) and [Tailwind CSS](https://tailwindcss.com), but you don’t need to know either to use it.
 
 ---
 
-**Note:** The license fee for this plugin is $59 via the Craft Plugin Store.
+**Note:** The license fee for this plugin is $59 via the [Craft Plugin Store](https://plugins.craftcms.com/fffields).
 
 
 ## Requirements
