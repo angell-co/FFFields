@@ -1,7 +1,7 @@
 {
   "name": "fffields",
   "version": "0.0.1",
-  "description": "Fabulous front-end fields for Craft CMS",
+  "description": "Fabulous front-end fields for Craft",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js --progress --hide-modules"

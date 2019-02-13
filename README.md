@@ -1,6 +1,12 @@
-# Fabulous front-end fields for Craft CMS
+# FFFields
 
-Assumptions: Vue & Tailwind
+Fabulous front-end fields for Craft
+
+![Banner](resources/img/banner.png)
+
+---
+
+**Note:** The license fee for this plugin is $59 via the Craft Plugin Store.
 
 ## Requirements
 

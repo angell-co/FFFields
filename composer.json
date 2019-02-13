@@ -1,6 +1,6 @@
 {
     "name": "angellco/fffields",
-    "description": "Fabulous front-end fields for Craft CMS.",
+    "description": "Fabulous front-end fields for Craft.",
     "type": "craft-plugin",
     "keywords": [
         "craft",
