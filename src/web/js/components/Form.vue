@@ -26,6 +26,10 @@
         name: 'fff-form',
         props: {
             mutation: String,
+            id: {
+                type: Number,
+                default: null
+            },
             enabled: {
                 type: Boolean,
                 default: true
@@ -98,7 +102,8 @@
                 // Add any special attributes to the main model
                 let postVars = {
                     ...this.model,
-                    enabled: this.enabled
+                    enabled: this.enabled,
+                    id: this.id
                 };
 
                 // Trim trailing comma

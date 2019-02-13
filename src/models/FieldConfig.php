@@ -196,6 +196,8 @@ class FieldConfig extends Model
                         $this->value = $this->settings['options'][0]['value'];
                     }
 
+                } elseif (is_a($value, 'craft\fields\data\SingleOptionFieldData')) {
+                    $this->value = $value->value;
                 } else {
                     $this->value = $value;
                 }
@@ -212,6 +214,8 @@ class FieldConfig extends Model
                         }
                     }
 
+                } elseif (is_a($value, 'craft\fields\data\SingleOptionFieldData')) {
+                    $this->value = $value->value;
                 } else {
                     $this->value = $value;
                 }
@@ -226,6 +230,15 @@ class FieldConfig extends Model
                     foreach ($this->settings['options'] as $option) {
                         if ($option['default']) {
                             $this->value[] = $option['value'];
+                        }
+                    }
+
+                } elseif (is_a($value, 'craft\fields\data\MultiOptionsFieldData')) {
+                    $this->value = [];
+
+                    foreach ($value as $option) {
+                        if ($option->selected) {
+                            $this->value[] = $option->value;
                         }
                     }
 
