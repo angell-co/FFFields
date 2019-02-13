@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit" novalidate>
+    <form @submit.prevent="onSubmit" novalidate class="m-0">
         <slot></slot>
         <button type="submit"
                 v-if="!redirecting && !working"
