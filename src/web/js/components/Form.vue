@@ -2,14 +2,19 @@
     <form @submit.prevent="onSubmit" novalidate>
         <slot></slot>
         <button type="submit"
-                v-if="!working"
+                v-if="!redirecting && !working"
                 class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Save
         </button>
         <button disabled="disabled"
-                v-if="working"
+                v-if="working && !redirecting"
                 class="bg-grey text-white font-bold py-2 px-4 rounded">
-            Saving...
+            Saving &hellip;
+        </button>
+        <button disabled="disabled"
+                v-if="!working && redirecting"
+                class="bg-grey text-white font-bold py-2 px-4 rounded">
+            Redirecting &hellip;
         </button>
     </form>
 </template>
@@ -33,6 +38,7 @@
         data() {
             return {
                 working: false,
+                redirecting: false,
                 model: {},
                 gqlTypes: "",
                 gqlVars: "",
@@ -124,16 +130,29 @@
                 })
 
                 // Success
-                .then((data) => {
+                .then((returnData) => {
                     this.working = false;
                     this.clearFields();
 
-                    console.log(data);
+                    if (this.redirect) {
+                        this.redirecting = true;
+
+                        let validTokens = {
+                            '{id}': returnData.data[this.mutation].id,
+                            '{slug}': returnData.data[this.mutation].slug,
+                            '{url}': returnData.data[this.mutation].url
+                        };
+
+                        let redirect = this.redirect.replace(/{\w+}/g, function(all) {
+                            return validTokens[all] || all;
+                        });
+
+                        window.location = redirect;
+                    }
                 })
 
                 // Failure
                 .catch((error) => {
-
                     this.working = false;
                     console.error(error);
                 });
