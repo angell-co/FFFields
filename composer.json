@@ -24,6 +24,9 @@
     "require": {
         "craftcms/cms": "^3.1.0"
     },
+    "suggest": {
+        "markhuot/craftql": "Hook your fields up to Craft and get a full-featured CRUD system",
+    },
     "autoload": {
         "psr-4": {
           "angellco\\fffields\\": "src/"
