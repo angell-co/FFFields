@@ -105,20 +105,19 @@ const configureImageLoader = (buildType) => {
 };
 
 // Configure optimization
-const configureOptimization = (buildType) => {
+const configureOptimization = () => {
     return {
-        splitChunks: {
-            cacheGroups: {
-                default: false,
-                common: false,
-                styles: {
-                    name: settings.vars.cssName,
-                    test: /\.(pcss|css|vue)$/,
-                    chunks: 'all',
-                    enforce: true
-                }
-            }
-        },
+        // splitChunks: {
+        //     chunks: 'initial',
+        //     cacheGroups: {
+        //         styles: {
+        //             name: settings.vars.cssName,
+        //             test: /\.(pcss|css)$/,
+        //             chunks: 'all',
+        //             enforce: true
+        //         }
+        //     }
+        // },
         minimizer: [
             new TerserPlugin(
                 configureTerser()
@@ -136,7 +135,6 @@ const configureOptimization = (buildType) => {
         ]
     };
 };
-
 // Configure Postcss loader
 const configurePostcssLoader = (buildType) => {
     return {
@@ -223,9 +221,6 @@ module.exports = [
                     path: path.resolve(__dirname, settings.paths.dist.base),
                     filename: path.join('./css', '[name].css'),
                 }),
-                new PurgecssPlugin(
-                    configurePurgeCss()
-                ),
                 new webpack.BannerPlugin(
                     configureBanner()
                 ),

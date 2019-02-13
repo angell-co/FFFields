@@ -31,8 +31,9 @@ class Render extends Component
     /**
      * @return \Twig_Markup
      */
-    public function includeJs()
+    public function includeAssets()
     {
+        Craft::$app->view->registerAssetBundle("angellco\\fffields\\assetbundles\\FffieldsAsset");
         $data = [
             'gqlEndpoint' => Craft::parseEnv('$FFF_GQL_ENDPOINT'),
             'token' => Craft::parseEnv('$FFF_GQL_TOKEN')
