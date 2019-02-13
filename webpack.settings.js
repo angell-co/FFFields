@@ -27,7 +27,7 @@ module.exports = {
         publicPath: () => process.env.PUBLIC_PATH || "",
     },
     vars: {
-        cssName: "styles"
+        cssName: "fffstyles"
     },
     entries: {
         "fffields": "fffields.js"

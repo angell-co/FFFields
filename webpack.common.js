@@ -7,7 +7,6 @@ const path = require('path');
 const merge = require('webpack-merge');
 
 // webpack plugins
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
@@ -27,22 +26,14 @@ const configureBabelLoader = (browserList) => {
                 presets: [
                     [
                         '@babel/preset-env', {
-                            modules: false,
-                            useBuiltIns: 'entry',
-                            targets: {
-                                browsers: browserList,
-                            },
-                        }
+                        useBuiltIns: 'usage',
+                        targets: {
+                            browsers: browserList,
+                        },
+                    }
                     ],
                 ],
-                plugins: [
-                    '@babel/plugin-syntax-dynamic-import',
-                    [
-                        "@babel/plugin-transform-runtime", {
-                            "regenerator": true
-                        }
-                    ]
-                ],
+                plugins: [],
             },
         },
     };
@@ -126,23 +117,6 @@ const legacyConfig = {
         ],
     },
     plugins: [
-        new CopyWebpackPlugin(
-            settings.copyWebpackConfig
-        ),
-        new ManifestPlugin(
-            configureManifest('manifest-legacy.json')
-        ),
-    ]
-};
-
-// Modern webpack config
-const modernConfig = {
-    module: {
-        rules: [
-            configureBabelLoader(Object.values(pkg.browserslist.modernBrowsers)),
-        ],
-    },
-    plugins: [
         new ManifestPlugin(
             configureManifest('manifest.json')
         ),
@@ -155,9 +129,5 @@ module.exports = {
     'legacyConfig': merge(
         legacyConfig,
         baseConfig,
-    ),
-    'modernConfig': merge(
-        modernConfig,
-        baseConfig,
-    ),
+    )
 };

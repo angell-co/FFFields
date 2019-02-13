@@ -1,5 +1,5 @@
 // Styles
-import styles from '../css/fffields.pcss';
+import fffstyles from '../css/fffields.pcss';
 
 
 // State

@@ -1,7 +1,3 @@
-// webpack.dev.js - developmental builds
-const LEGACY_CONFIG = 'legacy';
-const MODERN_CONFIG = 'modern';
-
 // node modules
 const merge = require('webpack-merge');
 const path = require('path');
@@ -42,73 +38,59 @@ const configureDevServer = (buildType) => {
 };
 
 // Configure Image loader
-const configureImageLoader = (buildType) => {
-    if (buildType === LEGACY_CONFIG) {
-        return {
-            test: /\.(png|jpe?g|gif|svg|webp)$/i,
-            use: [
-                {
-                    loader: 'file-loader',
-                    options: {
-                        name: 'img/[name].[hash].[ext]'
-                    }
+const configureImageLoader = () => {
+    return {
+        test: /\.(png|jpe?g|gif|svg|webp)$/i,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    name: 'img/[name].[ext]'
                 }
-            ]
-        };
-    }
-    if (buildType === MODERN_CONFIG) {
-        return {
-            test: /\.(png|jpe?g|gif|svg|webp)$/i,
-            use: [
-                {
-                    loader: 'file-loader',
-                    options: {
-                        name: 'img/[name].[hash].[ext]'
-                    }
-                }
-            ]
-        };
-    }
+            }
+        ]
+    };
+};
+
+// Configure optimization
+const configureOptimization = () => {
+    return {
+        splitChunks: {
+            cacheGroups: {
+            }
+        },
+    };
 };
 
 // Configure the Postcss loader
 const configurePostcssLoader = (buildType) => {
-    // Don't generate CSS for the legacy config in development
-    if (buildType === LEGACY_CONFIG) {
-        return {
-            test: /\.(pcss|css)$/,
-            loader: 'ignore-loader'
-        };
-    }
-    if (buildType === MODERN_CONFIG) {
-        return {
-            test: /\.(pcss|css)$/,
-            use: [
-                {
-                    loader: 'style-loader',
-                },
-                {
-                    loader: 'vue-style-loader',
-                },
-                {
-                    loader: 'css-loader',
-                    options: {
-                        importLoaders: 2,
-                        sourceMap: true
-                    }
-                },
-                {
-                    loader: 'resolve-url-loader'
-                },
-                {
-                    loader: 'postcss-loader',
-                    options: {
-                        sourceMap: true
-                    }
+    return {
+        test: /\.(pcss|css)$/,
+        use: [
+            {
+                loader: 'style-loader',
+            },
+            {
+                loader: 'vue-style-loader',
+            },
+            {
+                loader: 'css-loader',
+                options: {
+                    importLoaders: 2,
+                    sourceMap: true
                 }
-            ]
-        };
-    }
+            },
+            {
+                loader: 'resolve-url-loader'
+            },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    sourceMap: true
+                }
+            }
+        ]
+    };
 };
 
 // Development module exports
@@ -117,37 +99,22 @@ module.exports = [
         common.legacyConfig,
         {
             output: {
-                filename: path.join('./js', '[name]-legacy.[hash].js'),
+                filename: path.join('./js', '[name].js'),
                 publicPath: settings.devServerConfig.public() + '/',
+            },
+            resolve: {
+                alias: {
+                    'vue$': 'vue/dist/vue.js'
+                }
             },
             mode: 'development',
             devtool: 'inline-source-map',
-            devServer: configureDevServer(LEGACY_CONFIG),
+            optimization: configureOptimization(),
+            devServer: configureDevServer(),
             module: {
                 rules: [
-                    configurePostcssLoader(LEGACY_CONFIG),
-                    configureImageLoader(LEGACY_CONFIG),
-                ],
-            },
-            plugins: [
-                new webpack.HotModuleReplacementPlugin(),
-            ],
-        }
-    ),
-    merge(
-        common.modernConfig,
-        {
-            output: {
-                filename: path.join('./js', '[name].[hash].js'),
-                publicPath: settings.devServerConfig.public() + '/',
-            },
-            mode: 'development',
-            devtool: 'inline-source-map',
-            devServer: configureDevServer(MODERN_CONFIG),
-            module: {
-                rules: [
-                    configurePostcssLoader(MODERN_CONFIG),
-                    configureImageLoader(MODERN_CONFIG),
+                    configurePostcssLoader(),
+                    configureImageLoader(),
                 ],
             },
             plugins: [
