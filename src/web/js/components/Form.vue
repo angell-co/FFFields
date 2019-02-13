@@ -110,9 +110,9 @@
                 this.gqlTypes = this.gqlTypes.slice(0, -1);
                 this.gqlVars = this.gqlVars.slice(0, -1);
 
-                // Add the enabled state
-                this.gqlTypes += ",$enabled:Boolean";
-                this.gqlVars += ",enabled:$enabled";
+                // Add the extra types and vars
+                this.gqlTypes += ",$enabled:Boolean,$id:Int";
+                this.gqlVars += ",enabled:$enabled,id:$id";
 
                 // Tell the user we’re doing something
                 this.working = true;
@@ -137,7 +137,10 @@
                 // Success
                 .then((returnData) => {
                     this.working = false;
-                    this.clearFields();
+
+                    if (!this.id) {
+                        this.clearFields();
+                    }
 
                     if (this.redirect) {
                         this.redirecting = true;
