@@ -28,6 +28,8 @@ class FieldConfig extends Component
     // =========================================================================
 
     /**
+     * Returns the FieldConfigModel for a given field handle.
+     *
      * @param      $handle
      * @param null $value
      * @param bool $required
@@ -37,37 +39,21 @@ class FieldConfig extends Component
     public function get($handle, $value = null, $required = false)
     {
         // Sort out the basic model
-        if ($handle === 'title') {
+        /** @var FieldInterface $field */
+        $field = Craft::$app->fields->getFieldByHandle($handle);
 
-            $model = new FieldConfigModel([
-                'name' => 'Title',
-                'handle' => 'title',
-                'instructions' => '',
-                'value' => null,
-                'required' => true,
-                'type' => 'title',
-                'settings' => [
-                    'charLimit' => 255
-                ]
-            ]);
-        } else {
-
-            /** @var FieldInterface $field */
-            $field = Craft::$app->fields->getFieldByHandle($handle);
-
-            if (!$field) {
-                throw new Exception('Invalid field handle: '.$handle);
-            }
-
-            $model = new FieldConfigModel([
-                'name' => $field->name,
-                'handle' => $field->handle,
-                'instructions' => $field->instructions,
-                'required' => $required,
-                'type' => get_class($field),
-                'settings' => $field->getSettings()
-            ]);
+        if (!$field) {
+            throw new Exception('Invalid field handle: '.$handle);
         }
+
+        $model = new FieldConfigModel([
+            'name' => $field->name,
+            'handle' => $field->handle,
+            'instructions' => $field->instructions,
+            'required' => $required,
+            'type' => get_class($field),
+            'settings' => $field->getSettings()
+        ]);
 
         // Set the types needed by Vue and GraphQL
         $model->setTypes();
@@ -82,4 +68,44 @@ class FieldConfig extends Component
 
         return $model;
     }
+
+    /**
+     * Returns a FieldConfigModel for a given element attribute name.
+     *
+     * @param      $handle
+     * @param null $value
+     * @param bool $required
+     *
+     * @return FieldConfigModel
+     */
+    public function getSpecial($handle, $value = null, $required = false)
+    {
+        switch ($handle) {
+            case 'title':
+                $model = new FieldConfigModel([
+                    'name' => 'Title',
+                    'handle' => 'title',
+                    'instructions' => '',
+                    'required' => $required,
+                    'type' => 'title',
+                    'settings' => [
+                        'charLimit' => 255
+                    ]
+                ]);
+                break;
+        }
+
+        if (!$model) {
+            throw new Exception('Invalid option: '.$handle);
+        }
+
+        // Set the types needed by Vue and GraphQL
+        $model->setTypes();
+
+        // Set the value
+        $model->setValue($value);
+
+        return $model;
+    }
+
 }
