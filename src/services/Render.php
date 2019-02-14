@@ -40,11 +40,11 @@ class Render extends Component
             Craft::$app->view->registerAssetBundle("angellco\\fffields\\assetbundles\\FffieldsCssAsset");
         }
 
-        $this->outputState();
+        return $this->outputState();
     }
 
     /**
-     * @return \Twig_Markup
+     * @return \Twig_Markup|void
      */
     public function outputState()
     {
@@ -60,6 +60,8 @@ class Render extends Component
 
             return TemplateHelper::raw($js);
         }
+
+        return;
     }
 
     /**
