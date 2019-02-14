@@ -183,5 +183,12 @@ These will need testing once the various special attributes for each form are ad
 - [ ] Forgot Password
 - [ ] Set Password
 
+---
 
 Brought to you by [Angell & Co](https://angell.io)
+
+Big thanks to the following people and projects:
+
+- Mark Huot, author of [CraftQL](https://github.com/markhuot/craftql)
+- The [Vue.js](https://vuejs.org/) project
+- The [Tailwind CSS](https://tailwindcss.com) project
