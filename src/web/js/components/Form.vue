@@ -51,14 +51,12 @@
         methods: {
 
             clearFields () {
-                this.$slots.default.forEach(vNode => {
-                    if (typeof vNode.children !== "undefined") {
-                        let field = vNode.children[0].componentInstance;
-                        if (typeof field.$refs.input !== "undefined") {
-                            field.$refs.input.model = field.$refs.input.config.value;
-                            if (typeof field.$refs.input.$v !== "undefined") {
-                                field.$refs.input.$v.$reset();
-                            }
+                let fields = this.$children.filter(child => { return child.$options._componentTag === 'fff-field' });
+                fields.forEach(field => {
+                    if (typeof field.$refs.input !== "undefined") {
+                        field.$refs.input.model = field.$refs.input.config.value;
+                        if (typeof field.$refs.input.$v !== "undefined") {
+                            field.$refs.input.$v.$reset();
                         }
                     }
                 });
@@ -71,26 +69,22 @@
                 this.gqlVars = "";
 
                 // Compile field data, gql vars and validate
-                this.$slots.default.forEach(vNode => {
-                    if (typeof vNode.children !== "undefined") {
-                        let field = vNode.children[0].componentInstance;
+                let fields = this.$children.filter(child => { return child.$options._componentTag === 'fff-field' });
+                fields.forEach(field => {
+                    if (typeof field.$refs.input !== "undefined") {
 
-                        if (typeof field.$refs.input !== "undefined") {
+                        let input = field.$refs.input;
 
-                            let input = field.$refs.input;
+                        this.model[input.config.handle] = input.model;
+                        this.gqlTypes += "$"+input.config.handle+":"+input.config.gqlType+",";
+                        this.gqlVars += input.config.handle+":$"+input.config.handle+",";
 
-                            this.model[input.config.handle] = input.model;
-                            this.gqlTypes += "$"+input.config.handle+":"+input.config.gqlType+",";
-                            this.gqlVars += input.config.handle+":$"+input.config.handle+",";
-
-                            if (typeof input.$v !== "undefined") {
-                                input.$v.$touch();
-                                if (input.$v.$invalid) {
-                                    hasErrors = true;
-                                }
+                        if (typeof input.$v !== "undefined") {
+                            input.$v.$touch();
+                            if (input.$v.$invalid) {
+                                hasErrors = true;
                             }
                         }
-
                     }
                 });
 
