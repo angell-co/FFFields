@@ -48,12 +48,18 @@ class Render extends Component
      */
     public function outputState()
     {
-        $data = [
-            'gqlEndpoint' => Craft::parseEnv('$FFF_GQL_ENDPOINT'),
-            'token' => Craft::parseEnv('$FFF_GQL_TOKEN')
-        ];
-        $js = "<script>window.fffields = ".Json::encode($data)."</script>";
-        return TemplateHelper::raw($js);
+        $gqlEndpoint = Craft::parseEnv('$FFF_GQL_ENDPOINT');
+        $token = Craft::parseEnv('$FFF_GQL_TOKEN');
+
+        if ($gqlEndpoint !== '$FFF_GQL_ENDPOINT' && $token !== '$FFF_GQL_TOKEN') {
+            $data = [
+                'gqlEndpoint' => $gqlEndpoint,
+                'token' => $token
+            ];
+            $js = "<script>window.fffields = ".Json::encode($data)."</script>";
+
+            return TemplateHelper::raw($js);
+        }
     }
 
     /**
@@ -90,12 +96,13 @@ class Render extends Component
      * @param      $mutation
      * @param bool $enabled
      * @param null $redirect
+     * @param null $elementId
      *
      * @return \Twig_Markup
      */
-    public function formStart($mutation, $enabled = true, $redirect = null)
+    public function formStart($mutation, $enabled = true, $redirect = null, $elementId = null)
     {
-        $html = "<fff-form :mutation=\"'${mutation}'\" :enabled=\"".($enabled ? 'true' : 'false')."\" :redirect=\"'${redirect}'\">";
+        $html = "<fff-form :mutation=\"'${mutation}'\" :enabled=\"".($enabled ? 'true' : 'false')."\" :redirect=\"'${redirect}'\" :id=\"".($elementId ? $elementId : 'null')."\">";
         return TemplateHelper::raw($html);
     }
 
