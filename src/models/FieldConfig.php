@@ -117,22 +117,22 @@ class FieldConfig extends Model
                 break;
 
             case 'craft\fields\Dropdown':
-                $this->gqlType = 'DropdownEnum';
+                $this->gqlType = $this->_getGraphQlEnum($this->handle);
                 $this->vueFieldType = 'fff-dropdown';
                 break;
 
             case 'craft\fields\MultiSelect':
-                $this->gqlType = '[MultiSelectEnum]';
+                $this->gqlType = "[".$this->_getGraphQlEnum($this->handle)."]";
                 $this->vueFieldType = 'fff-multi-select';
                 break;
 
             case 'craft\fields\RadioButtons':
-                $this->gqlType = 'RadioButtonsEnum';
+                $this->gqlType = $this->_getGraphQlEnum($this->handle);
                 $this->vueFieldType = 'fff-radio-buttons';
                 break;
 
             case 'craft\fields\Checkboxes':
-                $this->gqlType = '[CheckboxesEnum]';
+                $this->gqlType = "[".$this->_getGraphQlEnum($this->handle)."]";
                 $this->vueFieldType = 'fff-checkboxes';
                 break;
 
@@ -272,5 +272,28 @@ class FieldConfig extends Model
     public function toJson()
     {
         return Json::encode($this->toArray());
+    }
+
+    // Private Methods
+    // =========================================================================
+
+    /**
+     * Formats the enum type string
+     *
+     * TODO: this is currently borrowed from the CraftQL helpers, we should
+     *       refactor to include the helper directly and only use the `gqlType`
+     *       prop if CraftQL is installed.
+     *
+     * @param $string
+     *
+     * @return string
+     */
+    private function _getGraphQlEnum($string)
+    {
+        $string = preg_replace('/[^a-z0-9_]+/i', ' ', $string);
+        $string = preg_replace_callback('/\s+(.)/', function ($match) {
+            return ucfirst($match[1]);
+        }, $string);
+        return ucfirst($string).'Enum';
     }
 }
