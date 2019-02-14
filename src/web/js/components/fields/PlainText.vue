@@ -18,7 +18,7 @@
 
         <div v-if="$v.model.$error" class="text-red text-xs italic mt-2">
             <p v-if="!$v.model.required">{{config.name}} cannot be blank</p>
-            <p v-if="!$v.model.maxLength">{{config.name}} should contain at most {{config.settings.charLimit}} characters</p>
+            <p v-if="maxLength && !$v.model.maxLength">{{config.name}} should contain at most {{config.settings.charLimit}} characters</p>
         </div>
     </div>
 </template>
