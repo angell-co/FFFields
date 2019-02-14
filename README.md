@@ -136,7 +136,7 @@ The attributes for the `formStart()` method can be configured as follows:
 1. `mutation`: required. Set this to the GraphQL mutation you want to use, e.g. `upsertJobs`.
 2. `enabled`: optional, defaults to `true`. Set this to false if you want to submit a disabled element.
 3. `redirect`: optional, defualts to `null`. Set this to the path you want the user to be redirected to after a successful submission. Token substituion is supported so `/jobs/edit/{id}` would replace `{id}` with the ID value that is returned after submission. Currently supported tokens are `{id}`, `{slug}` and `{url}`.
-4. `elementId`: optinoal, defualts to `null`. Set this to the ID of the element you want to edit.
+4. `elementId`: optional, defualts to `null`. Set this to the ID of the element you want to edit.
 
 
 ## FFFields Roadmap
