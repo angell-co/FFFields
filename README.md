@@ -34,7 +34,7 @@ You can also install FFFields via the Plugin Store in your Craft control panel, 
 
 ## FFFields Overview
 
-FFFields gives you a complete toolkit to create fabulous front-end forms and dashboards. You can hook up your fields to Craft via the [CraftQL plugin](https://plugins.craftcms.com/craftql) or roll your own solution, you choose.
+FFFields gives you a complete toolkit to create fabulous front-end forms and dashboards. You can hook up your fields to Craft via the [CraftQL plugin](https://plugins.craftcms.com/craftql) or roll your own solution.
 
 This plugin makes use of [Vue.js](https://vuejs.org/) and [Tailwind CSS](https://tailwindcss.com), but you don’t need to know either to use it.
 
