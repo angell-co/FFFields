@@ -16,6 +16,7 @@ use angellco\fffields\models\FieldConfig as FieldConfigModel;
 use Craft;
 use craft\base\Component;
 use craft\base\FieldInterface;
+use yii\base\Exception;
 
 /**
  * @author    Angell & Co
