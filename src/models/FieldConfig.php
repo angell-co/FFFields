@@ -260,6 +260,11 @@ class FieldConfig extends Model
                 }
                 break;
 
+            case 'craft\fields\Matrix':
+                if (is_null($value)) {
+                    $this->value = [];
+                }
+                break;
 
             default:
                 $this->value = $value;
@@ -267,6 +272,11 @@ class FieldConfig extends Model
 
     }
 
+    /**
+     * Allows us to prep the settings array if needed for a given field type
+     *
+     * @param FieldInterface $field
+     */
     public function prepSettings(FieldInterface $field)
     {
 
