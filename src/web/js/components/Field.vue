@@ -44,7 +44,7 @@
         'fff-radio-buttons': RadioButtons,
         'fff-checkboxes': Checkboxes,
         'fff-number': Number,
-        // 'fff-matrix': Matrix
+        'fff-matrix': Matrix
     };
 
     export default {

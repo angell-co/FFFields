@@ -13,6 +13,7 @@ namespace angellco\fffields\models;
 use angellco\fffields\FFFields;
 
 use Craft;
+use craft\base\FieldInterface;
 use craft\base\Model;
 use craft\helpers\Json;
 use craft\validators\ArrayValidator;
@@ -262,6 +263,15 @@ class FieldConfig extends Model
 
             default:
                 $this->value = $value;
+        }
+
+    }
+
+    public function prepSettings(FieldInterface $field)
+    {
+
+        if ($this->type === 'craft\fields\Matrix') {
+            $this->settings['blockTypes'] = Craft::$app->matrix->getBlockTypesByFieldId($field->id);
         }
 
     }

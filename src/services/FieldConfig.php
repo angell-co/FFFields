@@ -62,6 +62,9 @@ class FieldConfig extends Component
         // Set the value
         $model->setValue($value);
 
+        // Prep additional settings
+        $model->prepSettings($field);
+
         // Validate
         if (!$model->validate()) {
             throw new Exception('Invalid field config model for handle: '.$handle);
