@@ -4,10 +4,9 @@
                :for="config.handle">
             {{ config.name }}
             <span v-if="config.required" class="text-red">*</span>
+            <span v-if="config.instructions"
+               class="block font-normal text-grey-dark text-xs italic my-2">{{ config.instructions }}</span>
         </label>
-
-        <p v-if="config.instructions"
-           class="text-grey-dark text-xs italic mb-2">{{ config.instructions }}</p>
 
         <component :is="config.vueFieldType"
                    v-if="isValidFieldtype"
