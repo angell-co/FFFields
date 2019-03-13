@@ -192,3 +192,4 @@ Big thanks to the following people and projects:
 - Mark Huot, author of [CraftQL](https://github.com/markhuot/craftql)
 - The [Vue.js](https://vuejs.org/) project
 - The [Tailwind CSS](https://tailwindcss.com) project
+- The [Font Awesome](https://fontawesome.com) icons, used under their [free license](https://fontawesome.com/license/free)
