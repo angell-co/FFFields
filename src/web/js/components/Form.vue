@@ -4,12 +4,12 @@
         <button type="submit"
                 v-if="!redirecting && !working"
                 class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Save
+            {{submitText}}
         </button>
         <button disabled="disabled"
                 v-if="working && !redirecting"
                 class="bg-grey text-white font-bold py-2 px-4 rounded">
-            Saving &hellip;
+            {{submittingText}}
         </button>
         <button disabled="disabled"
                 v-if="!working && redirecting"
@@ -37,6 +37,14 @@
             redirect: {
                 type: String,
                 default: null
+            },
+            submitText: {
+                type: String,
+                default: 'Save'
+            },
+            submittingText: {
+                type: String,
+                default: 'Saving …'
             }
         },
         data() {
