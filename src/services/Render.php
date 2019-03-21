@@ -131,7 +131,25 @@ class Render extends Component
         $redirect = isset($params['redirect']) ? $params['redirect'] : null;
         $elementId = isset($params['elementId']) ? $params['elementId'] : null;
 
-        $html = "<fff-form :mutation=\"'${mutation}'\" :enabled=\"".($enabled ? 'true' : 'false')."\" :redirect=\"'${redirect}'\" :id=\"".($elementId ? $elementId : 'null')."\">";
+        $submitText = isset($params['submitText']) ? $params['submitText'] : null;
+        $submittingText = isset($params['submittingText']) ? $params['submittingText'] : null;
+
+        $html = "<fff-form
+            :mutation=\"'${mutation}'\"
+            :enabled=\"".($enabled ? 'true' : 'false')."\"
+            :redirect=\"'${redirect}'\"
+            :id=\"".($elementId ? $elementId : 'null')."\"";
+
+        if ($submitText) {
+            $html .= " :submit-text=\"'${submitText}'\"";
+        }
+
+        if ($submittingText) {
+            $html .= " :submitting-text=\"'${submittingText}'\"";
+        }
+
+        $html .= ">";
+
         return TemplateHelper::raw($html);
     }
 
