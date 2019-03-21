@@ -98,18 +98,28 @@ To render a field use the following method:
 This method accepts a bunch of parameters as follows:
 
 ```twig
-{{ craft.fffields.renderField(handle, value = null, required = false) }}
+{{ craft.fffields.renderField(handle, {
+    value: null,
+    element: null,
+    required: false
+}) }}
 ```
 
 1. `handle`: this is required and should be a string
-2. `value`: optional, defaults to `null`
-3. `required`: optional, defaults to `false`
+2. Options:
+    1. `value`: optional, defaults to `null`
+    2. `element`: optional, if used it should be set to a valid Element and will override any `value` also set, defaults to `null` 
+    2. `required`: optional, boolean, defaults to `false`
 
 
 There is also another similar method for outputting special fields such as the `title`:
 
 ```twig
-{{ craft.fffields.renderSpecial(handle, value = null, required = false) }}
+{{ craft.fffields.renderSpecial(handle, {
+    value: null,
+    element: null,
+    required: false
+}) }}
 ```
 
 The `handle` for this method should be one of the following supported list:
@@ -123,7 +133,13 @@ The `handle` for this method should be one of the following supported list:
 If you plan on using CraftQL to handle the form submissions then you can wrap your fields in the following two tags:
 
 ```twig
-{{ craft.fffields.formStart(mutation, enabled = true, redirect = null, elementId = null) }}
+{{ craft.fffields.formStart(mutation, {
+    enabled: true,
+    redirect: null,
+    elementId: null,
+    submitText: null,
+    submittingText: null
+}) }}
 
   {{ craft.fffields.renderField() }}
   ...
@@ -131,12 +147,15 @@ If you plan on using CraftQL to handle the form submissions then you can wrap yo
 {{ craft.fffields.formEnd() }}
 ```
 
-The attributes for the `formStart()` method can be configured as follows:
+The parameters for the `formStart()` method can be configured as follows:
 
 1. `mutation`: required. Set this to the GraphQL mutation you want to use, e.g. `upsertJobs`.
-2. `enabled`: optional, defaults to `true`. Set this to false if you want to submit a disabled element.
-3. `redirect`: optional, defualts to `null`. Set this to the path you want the user to be redirected to after a successful submission. Token substituion is supported so `/jobs/edit/{id}` would replace `{id}` with the ID value that is returned after submission. Currently supported tokens are `{id}`, `{slug}` and `{url}`.
-4. `elementId`: optional, defualts to `null`. Set this to the ID of the element you want to edit.
+2. Options:
+    1. `enabled`: optional, defaults to `true`. Set this to false if you want to submit a disabled element.
+    2. `redirect`: optional, defualts to `null`. Set this to the path you want the user to be redirected to after a successful submission. Token substituion is supported so `/jobs/edit/{id}` would replace `{id}` with the ID value that is returned after submission. Currently supported tokens are `{id}`, `{slug}` and `{url}`.
+    3. `elementId`: optional, defualts to `null`. Set this to the ID of the element you want to edit.
+    4. `submitText`: optional, defaults to 'Save'. Use this to customise the submit button text.
+    5. `submittingText`: optional, defaults to 'Saving …'. Use this to customise the disabled submit button text that is shown whilst the form data is sent.
 
 
 ## FFFields Roadmap
