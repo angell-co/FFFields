@@ -163,6 +163,7 @@ The parameters for the `formStart()` method can be configured as follows:
 ### General
 
 - [x] Release it
+- [ ] Provide a way to delete existing elements via CraftQL
 - [ ] Firm up the Vue Form API and document it
 - [ ] Allow class overriding in Twig and Vue
 - [ ] Build out the Vue-only API that fetches field config over XHR
@@ -171,7 +172,7 @@ The parameters for the `formStart()` method can be configured as follows:
 
 ### Special attributes
 
-- [ ] Enabled / disabled
+- [x] Enabled / disabled
 - [ ] Slug
 - [ ] Post Date
 - [ ] Expiry Date
