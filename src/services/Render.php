@@ -15,6 +15,7 @@ use angellco\fffields\models\FieldConfig as FieldConfigModel;
 
 use Craft;
 use craft\base\Component;
+use craft\base\Element;
 use craft\helpers\Json;
 use craft\helpers\Template as TemplateHelper;
 
@@ -65,14 +66,26 @@ class Render extends Component
     }
 
     /**
-     * @param      $handle
-     * @param null $value
-     * @param bool $required
+     * @param       $handle
+     * @param array $params
      *
      * @return \Twig_Markup
+     * @throws \yii\base\Exception
      */
-    public function renderField($handle, $value = null, $required = false)
+    public function renderField($handle, $params = [])
     {
+        $value = isset($params['value']) ? $params['value'] : null;
+        $required = isset($params['required']) ? $params['required'] : false;
+
+        /** @var Element $element */
+        $element = isset($params['element']) ? $params['element'] : null;
+
+        // If we have no explicit value set but we do have an element then try
+        // and load the value from that
+        if (!$value && $element) {
+            $value = $element->getFieldValue($handle);
+        }
+
         /** @var FieldConfigModel $configModel */
         $configModel = FFFields::$plugin->fieldConfig->get($handle, $value, $required);
         $html = "<fff-field :config='".$configModel->toJson()."'></fff-field>";
@@ -80,14 +93,26 @@ class Render extends Component
     }
 
     /**
-     * @param      $handle
-     * @param null $value
-     * @param bool $required
+     * @param       $handle
+     * @param array $params
      *
      * @return \Twig_Markup
+     * @throws \yii\base\Exception
      */
-    public function renderSpecial($handle, $value = null, $required = false)
+    public function renderSpecial($handle, $params = [])
     {
+        $value = isset($params['value']) ? $params['value'] : null;
+        $required = isset($params['required']) ? $params['required'] : false;
+
+        /** @var Element $element */
+        $element = isset($params['element']) ? $params['element'] : null;
+
+        // If we have no explicit value set but we do have an element then try
+        // and load the value from that
+        if (!$value && $element) {
+            $value = $element->getAttributes([$handle])[$handle];
+        }
+
         /** @var FieldConfigModel $configModel */
         $configModel = FFFields::$plugin->fieldConfig->getSpecial($handle, $value, $required);
         $html = "<fff-field :config='".$configModel->toJson()."'></fff-field>";
@@ -95,15 +120,17 @@ class Render extends Component
     }
 
     /**
-     * @param      $mutation
-     * @param bool $enabled
-     * @param null $redirect
-     * @param null $elementId
+     * @param       $mutation
+     * @param array $params
      *
      * @return \Twig_Markup
      */
-    public function formStart($mutation, $enabled = true, $redirect = null, $elementId = null)
+    public function formStart($mutation, $params = [])
     {
+        $enabled = isset($params['enabled']) ? $params['enabled'] : true;
+        $redirect = isset($params['redirect']) ? $params['redirect'] : null;
+        $elementId = isset($params['elementId']) ? $params['elementId'] : null;
+
         $html = "<fff-form :mutation=\"'${mutation}'\" :enabled=\"".($enabled ? 'true' : 'false')."\" :redirect=\"'${redirect}'\" :id=\"".($elementId ? $elementId : 'null')."\">";
         return TemplateHelper::raw($html);
     }
@@ -117,17 +144,4 @@ class Render extends Component
         return TemplateHelper::raw($html);
     }
 
-    /**
-     * @param      $handle
-     * @param null $value
-     * @param bool $required
-     *
-     * @return string
-     */
-    public function config($handle, $value = null, $required = false)
-    {
-        /** @var FieldConfigModel $configModel */
-        $configModel = FFFields::$plugin->fieldConfig->get($handle);
-        return $configModel->toJson();
-    }
 }
